@@ -1,169 +1,454 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOUTHERNRUST - NZ & AU Vanilla Rust Server</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Impact:wght@400;700&family=Press+Start+2P&display=swap');
-        
-        body { font-family: 'Impact', system-ui, sans-serif; }
-        .hero-bg {
-            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.75)), 
-                        url('https://picsum.photos/id/1015/1920/1080') center/cover no-repeat;
-        }
-        .logo-glow { filter: drop-shadow(0 0 20px #f97316); }
-        .nav-link:hover { color: #f97316; transform: translateY(-2px); }
-        .why-card:hover { transform: translateY(-8px); border-color: #f97316; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SouthernRust | NZ & AU Rust Server</title>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(255, 85, 0, 0.28), transparent 35%),
+        radial-gradient(circle at top left, rgba(255, 120, 20, 0.12), transparent 30%),
+        linear-gradient(180deg, #050505, #0b0705 45%, #050505);
+      color: #fff;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    nav {
+      height: 82px;
+      background: rgba(0,0,0,0.85);
+      border-bottom: 1px solid rgba(255,85,0,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 42px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 24px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .nav-logo img { width: 62px; height: 62px; object-fit: contain; }
+    .nav-logo span:last-child { color: #f05a18; }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 14px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+    nav a:hover { color: #f05a18; }
+
+    .discord-btn {
+      border: 1px solid #f05a18;
+      padding: 14px 22px;
+      border-radius: 4px;
+      color: #fff;
+    }
+
+    .hero {
+      min-height: 650px;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 50px;
+      align-items: center;
+      padding: 70px 8%;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.78) 42%, rgba(120,45,10,0.28) 100%);
+      border-bottom: 1px solid rgba(255,85,0,0.25);
+    }
+
+    .hero-logo {
+      width: 520px;
+      max-width: 100%;
+      filter: drop-shadow(0 0 30px rgba(255,80,0,0.25));
+    }
+
+    .tag {
+      border: 1px solid rgba(255,255,255,0.45);
+      padding: 14px 22px;
+      max-width: 520px;
+      margin: 18px 0 26px;
+      text-align: center;
+      letter-spacing: 4px;
+      font-size: 17px;
+      text-transform: uppercase;
+      background: rgba(0,0,0,0.35);
+    }
+
+    .hero-actions a {
+      display: inline-block;
+      padding: 18px 34px;
+      margin-right: 12px;
+      border-radius: 4px;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .join {
+      background: linear-gradient(180deg, #ff6a1a, #d93d00);
+      color: #fff;
+      box-shadow: 0 0 18px rgba(255,85,0,0.35);
+    }
+
+    .rules {
+      border: 1px solid #f05a18;
+      color: #fff;
+      background: rgba(0,0,0,0.3);
+    }
+
+    .visual {
+      min-height: 430px;
+      border: 1px solid rgba(255,85,0,0.35);
+      border-radius: 10px;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(255,100,20,0.45), transparent 30%),
+        linear-gradient(135deg, #120805, #1c0c05 50%, #050505);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -15deg,
+        rgba(255,255,255,0.035) 0,
+        rgba(255,255,255,0.035) 1px,
+        transparent 1px,
+        transparent 18px
+      );
+      opacity: 0.4;
+    }
+
+    .visual h2 {
+      position: relative;
+      font-size: 54px;
+      text-align: center;
+      color: #f05a18;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    .status {
+      margin: -45px 7% 60px;
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid rgba(255,85,0,0.7);
+      background: rgba(7,7,7,0.9);
+      box-shadow: 0 0 35px rgba(0,0,0,0.7);
+    }
+
+    .status-card {
+      padding: 28px;
+      border-right: 1px solid rgba(255,85,0,0.35);
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .status-card:last-child { border-right: none; }
+
+    .icon {
+      font-size: 42px;
+      color: #f05a18;
+    }
+
+    .status-card h3 {
+      font-size: 15px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #ddd;
+      margin-bottom: 8px;
+    }
+
+    .status-card strong {
+      color: #f05a18;
+      font-size: 28px;
+      text-transform: uppercase;
+    }
+
+    section {
+      padding: 30px 7% 70px;
+    }
+
+    .section-title {
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 36px;
+      margin-bottom: 36px;
+      letter-spacing: 2px;
+    }
+
+    .section-title span { color: #f05a18; }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      background: rgba(8,8,8,0.88);
+      border: 1px solid rgba(255,85,0,0.45);
+      padding: 28px 22px;
+      min-height: 190px;
+      text-align: center;
+      transition: 0.25s;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 22px rgba(255,85,0,0.25);
+    }
+
+    .feature .icon { margin-bottom: 16px; }
+
+    .feature h3 {
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    .feature p {
+      color: #cfcfcf;
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    .connect-box, .rules-box {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: rgba(8,8,8,0.9);
+      border: 1px solid rgba(255,85,0,0.45);
+      padding: 35px;
+      line-height: 1.8;
+    }
+
+    .connect-code {
+      margin-top: 18px;
+      padding: 18px;
+      background: #0f0f0f;
+      border-left: 4px solid #f05a18;
+      color: #f05a18;
+      font-size: 22px;
+      word-break: break-all;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255,85,0,0.35);
+      padding: 28px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0,0,0,0.9);
+      color: #aaa;
+    }
+
+    footer span { color: #f05a18; font-weight: 900; }
+
+    @media (max-width: 950px) {
+      nav { padding: 0 18px; }
+      .links { display: none; }
+      .hero { grid-template-columns: 1fr; text-align: center; padding: 45px 6%; }
+      .tag { margin-left: auto; margin-right: auto; }
+      .status { grid-template-columns: 1fr; margin: 0 5% 45px; }
+      .status-card { border-right: none; border-bottom: 1px solid rgba(255,85,0,0.35); }
+      .features { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
 </head>
-<body class="bg-zinc-950 text-white">
 
-    <!-- NAV -->
-    <nav class="bg-black border-b-2 border-orange-600 sticky top-0 z-50">
-        <div class="max-w-screen-2xl mx-auto px-8 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <img src="https://i.imgur.com/9kPqR2L.png" alt="SR Logo" class="h-12 w-auto logo-glow"> <!-- Replace with your real logo -->
-                <div class="text-4xl font-black tracking-tighter">
-                    <span class="text-white">SOUTHERN</span><span class="text-orange-600">RUST</span>
-                </div>
-            </div>
-            
-            <div class="hidden md:flex items-center gap-8 text-lg font-medium">
-                <a href="#" class="nav-link">HOME</a>
-                <a href="#rules" class="nav-link">RULES</a>
-                <a href="#connect" class="nav-link">CONNECT</a>
-                <a href="#wipe" class="nav-link">WIPE INFO</a>
-                <a href="#store" class="nav-link">STORE</a>
-                <a href="#discord" class="nav-link">DISCORD</a>
-            </div>
-            
-            <a href="https://discord.gg/yourinvite" target="_blank"
-               class="flex items-center gap-3 bg-white hover:bg-orange-600 hover:text-white text-black font-bold px-6 py-3 rounded-lg transition-all">
-                <i class="fab fa-discord text-2xl"></i>
-                JOIN DISCORD
-            </a>
-        </div>
-    </nav>
+<body>
 
-    <!-- HERO -->
-    <header class="hero-bg h-screen flex items-center">
-        <div class="max-w-screen-2xl mx-auto px-8 grid md:grid-cols-2 gap-12 items-center">
-            <div>
-                <div class="mb-8">
-                    <div class="inline-flex items-center gap-6">
-                        <div class="w-28 h-28 bg-gradient-to-br from-zinc-200 to-gray-400 rounded-full flex items-center justify-center border-8 border-orange-500">
-                            <span class="text-7xl font-black text-black">SR</span>
-                        </div>
-                        <div class="text-[92px] leading-none font-black tracking-[-6px]">
-                            SOUTHERN<br><span class="text-orange-600">RUST</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <p class="text-5xl font-bold mb-6">BUILT SOUTHERN.<br>PLAY STRONG.</p>
-                
-                <div class="bg-black/70 border border-orange-500 px-8 py-5 inline-block mb-10 text-xl">
-                    NZ &amp; AU SOLO/TRIO VANILLA RUST SERVER
-                </div>
-                
-                <div class="flex gap-5">
-                    <button onclick="connectServer()" 
-                            class="bg-orange-600 hover:bg-orange-700 text-white font-black text-3xl px-14 py-6 rounded-2xl flex items-center gap-4 shadow-2xl">
-                        <i class="fab fa-steam text-5xl"></i>
-                        JOIN SERVER
-                    </button>
-                    <button onclick="window.location.href='#rules'" 
-                            class="border-2 border-white hover:bg-white hover:text-black font-black text-3xl px-12 py-6 rounded-2xl">
-                        VIEW RULES
-                    </button>
-                </div>
-            </div>
-            
-            <div class="hidden md:block">
-                <!-- You can put a big screenshot or 3D render here -->
-            </div>
-        </div>
-    </header>
+<nav>
+  <div class="nav-logo">
+    <img src="logo.png" alt="SouthernRust">
+    <div><span>Southern</span><span>Rust</span></div>
+  </div>
 
-    <!-- STATS -->
-    <div class="bg-zinc-900 py-8 border-y-4 border-orange-600">
-        <div class="max-w-screen-2xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 px-8">
-            <div class="flex items-center gap-6 bg-zinc-950 p-6 rounded-2xl border border-orange-500/30">
-                <i class="fas fa-users text-6xl text-orange-500"></i>
-                <div>
-                    <div class="text-5xl font-black text-orange-500">27/100</div>
-                    <div class="uppercase text-sm">Players Online</div>
-                </div>
-            </div>
-            <div class="flex items-center gap-6 bg-zinc-950 p-6 rounded-2xl border border-orange-500/30">
-                <i class="fas fa-calendar text-6xl text-orange-500"></i>
-                <div>
-                    <div class="text-5xl font-black text-orange-500">24D 13H</div>
-                    <div class="uppercase text-sm">Next Wipe</div>
-                </div>
-            </div>
-            <div class="flex items-center gap-6 bg-zinc-950 p-6 rounded-2xl border border-orange-500/30">
-                <i class="fas fa-shield-alt text-6xl text-orange-500"></i>
-                <div>
-                    <div class="text-5xl font-black text-orange-500">30 MIN</div>
-                    <div class="uppercase text-sm">Offline Protection</div>
-                </div>
-            </div>
-            <div class="flex items-center gap-6 bg-zinc-950 p-6 rounded-2xl border border-orange-500/30">
-                <span class="text-6xl">🇳🇿🇦🇺</span>
-                <div>
-                    <div class="text-5xl font-black text-orange-500">NZ &amp; AU</div>
-                    <div class="uppercase text-sm text-emerald-400">Low Ping</div>
-                </div>
-            </div>
-        </div>
+  <div class="links">
+    <a href="#">Home</a>
+    <a href="#rules">Rules</a>
+    <a href="#connect">Connect</a>
+    <a href="#wipe">Wipe Info</a>
+    <a href="#store">Store</a>
+    <a href="#discord">Discord</a>
+  </div>
+
+  <a class="discord-btn" href="#discord">Join Discord</a>
+</nav>
+
+<header class="hero">
+  <div>
+    <img class="hero-logo" src="logo.png" alt="SouthernRust Logo">
+
+    <div class="tag">NZ & AU Solo/Trio Vanilla Rust Server</div>
+
+    <div class="hero-actions">
+      <a class="join" href="#connect">Join Server</a>
+      <a class="rules" href="#rules">View Rules</a>
+    </div>
+  </div>
+
+  <div class="visual">
+    <h2>Built Southern.<br>Play Strong.</h2>
+  </div>
+</header>
+
+<div class="status">
+  <div class="status-card">
+    <div class="icon">👥</div>
+    <div>
+      <h3>Players Online</h3>
+      <strong>0 / 75</strong>
+    </div>
+  </div>
+
+  <div class="status-card">
+    <div class="icon">📅</div>
+    <div>
+      <h3>Monthly Wipe</h3>
+      <strong>Force Wipe</strong>
+    </div>
+  </div>
+
+  <div class="status-card">
+    <div class="icon">🛡️</div>
+    <div>
+      <h3>Offline Raid Protection</h3>
+      <strong>30 Minutes</strong>
+    </div>
+  </div>
+
+  <div class="status-card">
+    <div class="icon">🗺️</div>
+    <div>
+      <h3>Region</h3>
+      <strong>NZ & AU</strong>
+    </div>
+  </div>
+</div>
+
+<section>
+  <h2 class="section-title">Why Play Southern<span>Rust?</span></h2>
+
+  <div class="features">
+    <div class="feature">
+      <div class="icon">👥</div>
+      <h3>Solo / Trio</h3>
+      <p>Maximum team size of 3. No giant clans. Fair fights only.</p>
     </div>
 
-    <!-- WHY PLAY -->
-    <section class="py-24 bg-black">
-        <div class="max-w-screen-2xl mx-auto px-8">
-            <h2 class="text-center text-6xl font-black mb-16">WHY PLAY <span class="text-orange-600">SOUTHERNRUST?</span></h2>
-            
-            <div class="grid md:grid-cols-5 gap-8">
-                <div class="why-card border-2 border-zinc-700 bg-zinc-900 p-8 rounded-3xl text-center">
-                    <i class="fas fa-users text-7xl text-orange-500 mb-6"></i>
-                    <h3 class="text-2xl font-black mb-3">SOLO / TRIO</h3>
-                    <p class="text-zinc-400">Maximum team size of 3.<br>Fair fights only.</p>
-                </div>
-                <div class="why-card border-2 border-zinc-700 bg-zinc-900 p-8 rounded-3xl text-center">
-                    <i class="fas fa-house-damage text-7xl text-orange-500 mb-6"></i>
-                    <h3 class="text-2xl font-black mb-3">NO OFFLINE RAIDING</h3>
-                    <p class="text-zinc-400">30 minutes protection after logout.</p>
-                </div>
-                <div class="why-card border-2 border-zinc-700 bg-zinc-900 p-8 rounded-3xl text-center">
-                    <i class="fas fa-cube text-7xl text-orange-500 mb-6"></i>
-                    <h3 class="text-2xl font-black mb-3">VANILLA</h3>
-                    <p class="text-zinc-400">No kits. No TP. No pay-to-win.</p>
-                </div>
-                <div class="why-card border-2 border-zinc-700 bg-zinc-900 p-8 rounded-3xl text-center">
-                    <i class="fas fa-sync text-7xl text-orange-500 mb-6"></i>
-                    <h3 class="text-2xl font-black mb-3">MONTHLY WIPES</h3>
-                    <p class="text-zinc-400">Blueprints persist.</p>
-                </div>
-                <div class="why-card border-2 border-zinc-700 bg-zinc-900 p-8 rounded-3xl text-center">
-                    <i class="fas fa-users text-7xl text-orange-500 mb-6"></i>
-                    <h3 class="text-2xl font-black mb-3">REAL COMMUNITY</h3>
-                    <p class="text-zinc-400">Toxic-free. Built for Kiwis &amp; Aussies.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="feature">
+      <div class="icon">🛡️</div>
+      <h3>No Offline Raiding</h3>
+      <p>Offline raid protection activates after 30 minutes offline.</p>
+    </div>
 
-    <script>
-        function connectServer() {
-            const ip = "your.server.ip:28015"; // ← CHANGE THIS
-            if (confirm("Connect to SouthernRust?\n\n" + ip)) {
-                window.location.href = `steam://connect/${ip}`;
-            }
-        }
-    </script>
+    <div class="feature">
+      <div class="icon">📦</div>
+      <h3>Vanilla Experience</h3>
+      <p>No kits, no teleport, no boosted loot, no pay-to-win.</p>
+    </div>
+
+    <div class="feature">
+      <div class="icon">🔁</div>
+      <h3>Monthly Wipes</h3>
+      <p>Map wipes monthly. Blueprints stay for long-term progression.</p>
+    </div>
+
+    <div class="feature">
+      <div class="icon">🔥</div>
+      <h3>Real Community</h3>
+      <p>Built for NZ and AU players who want fair Rust.</p>
+    </div>
+  </div>
+</section>
+
+<section id="connect">
+  <h2 class="section-title">Connect</h2>
+  <div class="connect-box">
+    Open Rust, press <strong>F1</strong>, then paste:
+    <div class="connect-code">client.connect 103.15.237.67:26912</div>
+  </div>
+</section>
+
+<section id="rules">
+  <h2 class="section-title">Rules</h2>
+  <div class="rules-box">
+    <p>1. Maximum team size is 3 players.</p>
+    <p>2. No cheating, scripting, exploiting, or ban evasion.</p>
+    <p>3. No teaming beyond trio limit.</p>
+    <p>4. Online raiding is allowed.</p>
+    <p>5. Offline raid protection activates after 30 minutes offline.</p>
+    <p>6. No teleport. No kits. No pay-to-win.</p>
+    <p>7. Respect players and staff.</p>
+  </div>
+</section>
+
+<section id="wipe">
+  <h2 class="section-title">Wipe Info</h2>
+  <div class="connect-box">
+    SouthernRust follows the monthly Rust force wipe. Map wipes monthly. Blueprints stay unless announced.
+  </div>
+</section>
+
+<section id="store">
+  <h2 class="section-title">Store</h2>
+  <div class="connect-box">
+    Coming soon. Supporter perks will be cosmetic and fair only. No pay-to-win.
+  </div>
+</section>
+
+<section id="discord">
+  <h2 class="section-title">Discord</h2>
+  <div class="connect-box">
+    Discord coming soon. This will be used for announcements, reports, support, suggestions, and wipe info.
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 SouthernRust</div>
+  <div><span>Built Southern. Play Strong.</span></div>
+</footer>
+
 </body>
 </html>
