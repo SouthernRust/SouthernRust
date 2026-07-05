@@ -1,201 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SouthernRust | NZ & AU Rust Server</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #080808;
-      color: #f5f5f5;
-    }
-
-    header {
-      background: linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.85)), url("banner.png") center/cover no-repeat;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 30px;
-    }
-
-    .hero img {
-      width: 180px;
-      max-width: 70%;
-      margin-bottom: 25px;
-    }
-
-    h1 {
-      font-size: 64px;
-      margin: 0;
-      letter-spacing: 2px;
-      color: #f26b21;
-      text-transform: uppercase;
-    }
-
-    .tagline {
-      font-size: 24px;
-      margin: 15px 0 30px;
-      color: #ddd;
-    }
-
-    .buttons a {
-      display: inline-block;
-      margin: 8px;
-      padding: 15px 28px;
-      background: #f26b21;
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 6px;
-    }
-
-    .buttons a.secondary {
-      background: transparent;
-      border: 2px solid #f26b21;
-    }
-
-    section {
-      padding: 70px 10%;
-      border-top: 1px solid #222;
-    }
-
-    h2 {
-      color: #f26b21;
-      font-size: 36px;
-      margin-bottom: 25px;
-      text-transform: uppercase;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background: #111;
-      border: 1px solid #2a2a2a;
-      padding: 25px;
-      border-radius: 10px;
-    }
-
-    .card h3 {
-      color: #fff;
-      margin-top: 0;
-    }
-
-    .rules li {
-      margin: 12px 0;
-    }
-
-    .connect-box {
-      background: #111;
-      border: 1px solid #f26b21;
-      padding: 25px;
-      border-radius: 10px;
-      font-size: 22px;
-      word-break: break-all;
-    }
-
-    footer {
-      text-align: center;
-      padding: 35px;
-      background: #050505;
-      color: #888;
-    }
-
-    @media (max-width: 700px) {
-      h1 { font-size: 40px; }
-      .tagline { font-size: 18px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOUTHERNRUST - NZ & AU Vanilla Rust Server</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Impact:wght@400;700&display=swap');
+        
+        :root {
+            --rust-orange: #ff4d00;
+        }
+        
+        body {
+            font-family: 'Impact', system-ui, sans-serif;
+        }
+        
+        .hero-bg {
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('https://picsum.photos/id/1015/1920/1080');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .logo-font {
+            font-family: 'Press Start 2P', cursive;
+            text-shadow: 3px 3px 0 #000,
+                        -3px -3px 0 #000,
+                        3px -3px 0 #000,
+                        -3px 3px 0 #000;
+        }
+        
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #ff4d00;
+            transform: translateY(-2px);
+        }
+        
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(255 77 0 / 0.3);
+        }
+        
+        .why-card {
+            transition: all 0.3s ease;
+        }
+        
+        .why-card:hover {
+            transform: scale(1.05);
+            border-color: #ff4d00;
+        }
+        
+        .sr-logo {
+            filter: drop-shadow(0 0 15px #ff4d00);
+        }
+    </style>
 </head>
-<body>
+<body class="bg-zinc-950 text-white overflow-x-hidden">
+    <!-- Navbar -->
+    <nav class="bg-black border-b border-orange-500 sticky top-0 z-50">
+        <div class="max-w-screen-2xl mx-auto">
+            <div class="flex items-center justify-between px-8 py-4">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12">
+                        <svg viewBox="0 0 100 100" class="sr-logo">
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#ddd" stroke-width="8"/>
+                            <text x="50" y="65" font-size="48" fill="#ddd" text-anchor="middle" font-weight="bold">SR</text>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="text-3xl font-black tracking-tighter text-white">SOUTHERN</span>
+                        <span class="text-3xl font-black tracking-tighter text-orange-600">RUST</span>
+                    </div>
+                </div>
+                
+                <!-- Menu -->
+                <div class="hidden md:flex items-center gap-8 text-lg font-medium">
+                    <a href="#" class="nav-link text-white">HOME</a>
+                    <a href="#" class="nav-link text-white">RULES</a>
+                    <a href="#" class="nav-link text-white">CONNECT</a>
+                    <a href="#" class="nav-link text-white">WIPE INFO</a>
+                    <a href="#" class="nav-link text-white">STORE</a>
+                    <a href="#" class="nav-link text-white">DISCORD</a>
+                </div>
+                
+                <a href="https://discord.gg/southernrust" target="_blank"
+                   class="flex items-center gap-2 bg-white text-black px-6 py-3 rounded-lg font-bold hover:bg-orange-500 hover:text-white transition-all">
+                    <i class="fab fa-discord text-xl"></i>
+                    JOIN DISCORD
+                </a>
+            </div>
+        </div>
+    </nav>
 
-<header>
-  <div class="hero">
-    <img src="logo.png" alt="SouthernRust Logo">
-    <h1>SouthernRust</h1>
-    <p class="tagline">NZ & AU Solo/Trio Vanilla Rust Server</p>
-    <div class="buttons">
-      <a href="#connect">Join Server</a>
-      <a class="secondary" href="#rules">View Rules</a>
+    <!-- Hero -->
+    <header class="hero-bg h-screen flex items-center relative">
+        <div class="max-w-screen-2xl mx-auto px-8 relative z-10">
+            <div class="max-w-3xl">
+                <!-- Big Logo -->
+                <div class="flex flex-col items-center md:items-start mb-8">
+                    <div class="inline-flex items-center gap-4 mb-6">
+                        <div class="w-24 h-24 bg-gradient-to-br from-zinc-300 to-gray-400 rounded-full flex items-center justify-center border-4 border-orange-500">
+                            <span class="text-6xl font-black text-black">SR</span>
+                        </div>
+                        <div>
+                            <span class="block text-8xl font-black tracking-[-4px] leading-none text-white">SOUTHERN</span>
+                            <span class="block text-8xl font-black tracking-[-4px] leading-none text-orange-600">RUST</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-3xl md:text-5xl font-bold tracking-tight mb-4 text-center md:text-left">
+                    BUILT SOUTHERN.<br>PLAY STRONG.
+                </p>
+                
+                <div class="bg-black/70 border border-orange-500/50 backdrop-blur-sm px-8 py-6 inline-block mb-10">
+                    <p class="text-2xl font-medium">NZ &amp; AU SOLO/TRIO VANILLA RUST SERVER</p>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button onclick="joinServer()" 
+                            class="bg-orange-600 hover:bg-orange-700 transition-colors text-white font-black text-2xl px-12 py-5 flex items-center justify-center gap-4 rounded-xl shadow-xl shadow-orange-900/50">
+                        <i class="fab fa-steam text-4xl"></i>
+                        JOIN SERVER
+                    </button>
+                    
+                    <button onclick="viewRules()" 
+                            class="border-2 border-white hover:bg-white hover:text-black transition-colors font-black text-2xl px-12 py-5 flex items-center justify-center gap-4 rounded-xl">
+                        <i class="fas fa-book"></i>
+                        VIEW RULES
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Overlay soldiers -->
+        <div class="absolute bottom-10 right-10 hidden xl:block">
+            <img src="https://picsum.photos/id/1016/600/400" alt="Rust players" class="rounded-lg border-4 border-orange-600 shadow-2xl">
+        </div>
+        
+        <div class="absolute bottom-8 left-1/2 flex flex-col items-center">
+            <div class="text-sm tracking-widest mb-2">SCROLL FOR MORE</div>
+            <i class="fas fa-chevron-down animate-bounce text-3xl"></i>
+        </div>
+    </header>
+
+    <!-- Stats Bar -->
+    <div class="bg-zinc-900 border-t-4 border-b-4 border-orange-500 py-6">
+        <div class="max-w-screen-2xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 px-8">
+            <!-- Players -->
+            <div class="stat-card flex items-center gap-4 bg-zinc-950 border border-orange-500/30 p-6 rounded-xl">
+                <i class="fas fa-users text-5xl text-orange-500"></i>
+                <div>
+                    <div class="text-4xl font-black text-orange-500">27 / 100</div>
+                    <div class="text-sm uppercase tracking-widest">Players Online</div>
+                    <a href="#" class="text-orange-400 text-sm hover:text-orange-500">VIEW LIVE MAP →</a>
+                </div>
+            </div>
+            
+            <!-- Wipe -->
+            <div class="stat-card flex items-center gap-4 bg-zinc-950 border border-orange-500/30 p-6 rounded-xl">
+                <i class="fas fa-calendar-alt text-5xl text-orange-500"></i>
+                <div>
+                    <div class="text-4xl font-black text-orange-500">24D 13H 45M</div>
+                    <div class="text-sm uppercase tracking-widest">Monthly Wipe</div>
+                    <div class="text-xs text-zinc-400">Next Wipe Countdown</div>
+                </div>
+            </div>
+            
+            <!-- Offline Protection -->
+            <div class="stat-card flex items-center gap-4 bg-zinc-950 border border-orange-500/30 p-6 rounded-xl">
+                <i class="fas fa-shield-alt text-5xl text-orange-500"></i>
+                <div>
+                    <div class="text-4xl font-black text-orange-500">30 MINUTES</div>
+                    <div class="text-sm uppercase tracking-widest">Offline Raid Protection</div>
+                    <div class="text-xs text-zinc-400">After Last Logout</div>
+                </div>
+            </div>
+            
+            <!-- Region -->
+            <div class="stat-card flex items-center gap-4 bg-zinc-950 border border-orange-500/30 p-6 rounded-xl">
+                <div class="text-5xl">🇳🇿🇦🇺</div>
+                <div>
+                    <div class="text-4xl font-black text-orange-500">NZ &amp; AU</div>
+                    <div class="text-sm uppercase tracking-widest">Region</div>
+                    <div class="text-xs text-emerald-400">LOW PING GUARANTEED</div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</header>
 
-<section>
-  <h2>Why Play SouthernRust?</h2>
-  <div class="grid">
-    <div class="card">
-      <h3>Solo / Trio</h3>
-      <p>Max team size of 3. No massive clans. Fair fights only.</p>
-    </div>
-    <div class="card">
-      <h3>No Offline Raiding</h3>
-      <p>Offline raid protection activates after 30 minutes offline.</p>
-    </div>
-    <div class="card">
-      <h3>Vanilla Feel</h3>
-      <p>No teleport, no kits, no boosted loot, no pay-to-win.</p>
-    </div>
-    <div class="card">
-      <h3>Monthly Wipes</h3>
-      <p>Map wipes monthly. Blueprints stay unless stated otherwise.</p>
-    </div>
-  </div>
-</section>
+    <!-- Why Play -->
+    <section class="py-20 bg-black">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <h2 class="text-center text-5xl font-black mb-16 tracking-wider">
+                WHY PLAY <span class="text-orange-600">SOUTHERNRUST?</span>
+            </h2>
+            
+            <div class="grid md:grid-cols-5 gap-8">
+                <!-- Card 1 -->
+                <div class="why-card bg-zinc-900 border-2 border-zinc-700 hover:border-orange-500 p-8 rounded-2xl text-center">
+                    <i class="fas fa-users text-6xl text-orange-500 mb-6"></i>
+                    <h3 class="text-2xl font-black mb-4">SOLO / TRIO</h3>
+                    <p class="text-zinc-400">Maximum team size of 3.<br>Fair fights only.</p>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="why-card bg-zinc-900 border-2 border-zinc-700 hover:border-orange-500 p-8 rounded-2xl text-center">
+                    <i class="fas fa-home text-6xl text-orange-500 mb-6"></i>
+                    <h3 class="text-2xl font-black mb-4">NO OFFLINE RAIDING</h3>
+                    <p class="text-zinc-400">Offline raid protection activates after 30 minutes offline.</p>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="why-card bg-zinc-900 border-2 border-zinc-700 hover:border-orange-500 p-8 rounded-2xl text-center">
+                    <i class="fas fa-cube text-6xl text-orange-500 mb-6"></i>
+                    <h3 class="text-2xl font-black mb-4">VANILLA EXPERIENCE</h3>
+                    <p class="text-zinc-400">No kits, no TP, no pay-to-win.<br>Just pure Vanilla Rust.</p>
+                </div>
+                
+                <!-- Card 4 -->
+                <div class="why-card bg-zinc-900 border-2 border-zinc-700 hover:border-orange-500 p-8 rounded-2xl text-center">
+                    <i class="fas fa-sync-alt text-6xl text-orange-500 mb-6"></i>
+                    <h3 class="text-2xl font-black mb-4">MONTHLY WIPES</h3>
+                    <p class="text-zinc-400">Map wipes every month.<br>Blueprints stay for long-term progression.</p>
+                </div>
+                
+                <!-- Card 5 -->
+                <div class="why-card bg-zinc-900 border-2 border-zinc-700 hover:border-orange-500 p-8 rounded-2xl text-center">
+                    <i class="fas fa-users text-6xl text-orange-500 mb-6"></i>
+                    <h3 class="text-2xl font-black mb-4">REAL COMMUNITY</h3>
+                    <p class="text-zinc-400">Built for players who want a fair, competitive and toxic-free environment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section id="connect">
-  <h2>Connect</h2>
-  <div class="connect-box">
-    Press F1 in Rust and type:<br><br>
-    <strong>client.connect 103.15.237.67:26912</strong>
-  </div>
-</section>
+    <!-- Footer -->
+    <footer class="bg-black py-12 border-t border-orange-500">
+        <div class="max-w-screen-2xl mx-auto px-8 text-center">
+            <p class="text-zinc-500">&copy; 2026 SOUTHERNRUST • NZ &amp; AU Vanilla Rust Server</p>
+        </div>
+    </footer>
 
-<section id="rules">
-  <h2>Server Rules</h2>
-  <ul class="rules">
-    <li>Maximum team size is 3 players.</li>
-    <li>No cheating, scripting, exploiting, or ban evasion.</li>
-    <li>No teaming beyond trio limit.</li>
-    <li>Online raiding is allowed.</li>
-    <li>Offline raid protection activates after 30 minutes offline.</li>
-    <li>No racism, harassment, or toxic abuse.</li>
-    <li>No admin abuse. Fair play only.</li>
-  </ul>
-</section>
-
-<section>
-  <h2>Wipe Info</h2>
-  <div class="card">
-    <h3>Monthly Map Wipe</h3>
-    <p>SouthernRust follows monthly Rust force wipe. Blueprints are intended to stay for long-term progression.</p>
-  </div>
-</section>
-
-<section>
-  <h2>Discord & Store</h2>
-  <div class="grid">
-    <div class="card">
-      <h3>Discord</h3>
-      <p>Coming soon. Announcements, reports, support, and community chat.</p>
-    </div>
-    <div class="card">
-      <h3>Supporter Store</h3>
-      <p>Coming soon. Cosmetics and supporter perks only. No pay-to-win.</p>
-    </div>
-  </div>
-</section>
-
-<footer>
-  SouthernRust © 2026 | Built Southern. Play Strong.
-</footer>
-
+    <script>
+        function joinServer() {
+            alert("Steam connect command:\n\nsteam://connect/southernrust.com:28015\n\n(Replace with your actual server IP/port)");
+            // In real use: window.location = "steam://connect/your.server.ip:28015";
+        }
+        
+        function viewRules() {
+            window.open('#', '_blank'); // Replace with actual rules link
+            alert("Rules page coming soon! In the meantime, join the Discord for full rules.");
+        }
+        
+        // Tailwind script already included
+        console.log("%cSOUTHERNRUST website loaded 🔥", "color: #ff4d00; font-size: 20px; font-weight: bold");
+    </script>
 </body>
 </html>
