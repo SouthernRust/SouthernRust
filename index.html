@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SouthernRust | NZ & AU Rust Server</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #080808;
+      color: #f5f5f5;
+    }
+
+    header {
+      background: linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.85)), url("banner.png") center/cover no-repeat;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .hero img {
+      width: 180px;
+      max-width: 70%;
+      margin-bottom: 25px;
+    }
+
+    h1 {
+      font-size: 64px;
+      margin: 0;
+      letter-spacing: 2px;
+      color: #f26b21;
+      text-transform: uppercase;
+    }
+
+    .tagline {
+      font-size: 24px;
+      margin: 15px 0 30px;
+      color: #ddd;
+    }
+
+    .buttons a {
+      display: inline-block;
+      margin: 8px;
+      padding: 15px 28px;
+      background: #f26b21;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 6px;
+    }
+
+    .buttons a.secondary {
+      background: transparent;
+      border: 2px solid #f26b21;
+    }
+
+    section {
+      padding: 70px 10%;
+      border-top: 1px solid #222;
+    }
+
+    h2 {
+      color: #f26b21;
+      font-size: 36px;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      padding: 25px;
+      border-radius: 10px;
+    }
+
+    .card h3 {
+      color: #fff;
+      margin-top: 0;
+    }
+
+    .rules li {
+      margin: 12px 0;
+    }
+
+    .connect-box {
+      background: #111;
+      border: 1px solid #f26b21;
+      padding: 25px;
+      border-radius: 10px;
+      font-size: 22px;
+      word-break: break-all;
+    }
+
+    footer {
+      text-align: center;
+      padding: 35px;
+      background: #050505;
+      color: #888;
+    }
+
+    @media (max-width: 700px) {
+      h1 { font-size: 40px; }
+      .tagline { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="hero">
+    <img src="logo.png" alt="SouthernRust Logo">
+    <h1>SouthernRust</h1>
+    <p class="tagline">NZ & AU Solo/Trio Vanilla Rust Server</p>
+    <div class="buttons">
+      <a href="#connect">Join Server</a>
+      <a class="secondary" href="#rules">View Rules</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <h2>Why Play SouthernRust?</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Solo / Trio</h3>
+      <p>Max team size of 3. No massive clans. Fair fights only.</p>
+    </div>
+    <div class="card">
+      <h3>No Offline Raiding</h3>
+      <p>Offline raid protection activates after 30 minutes offline.</p>
+    </div>
+    <div class="card">
+      <h3>Vanilla Feel</h3>
+      <p>No teleport, no kits, no boosted loot, no pay-to-win.</p>
+    </div>
+    <div class="card">
+      <h3>Monthly Wipes</h3>
+      <p>Map wipes monthly. Blueprints stay unless stated otherwise.</p>
+    </div>
+  </div>
+</section>
+
+<section id="connect">
+  <h2>Connect</h2>
+  <div class="connect-box">
+    Press F1 in Rust and type:<br><br>
+    <strong>client.connect 103.15.237.67:26912</strong>
+  </div>
+</section>
+
+<section id="rules">
+  <h2>Server Rules</h2>
+  <ul class="rules">
+    <li>Maximum team size is 3 players.</li>
+    <li>No cheating, scripting, exploiting, or ban evasion.</li>
+    <li>No teaming beyond trio limit.</li>
+    <li>Online raiding is allowed.</li>
+    <li>Offline raid protection activates after 30 minutes offline.</li>
+    <li>No racism, harassment, or toxic abuse.</li>
+    <li>No admin abuse. Fair play only.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Wipe Info</h2>
+  <div class="card">
+    <h3>Monthly Map Wipe</h3>
+    <p>SouthernRust follows monthly Rust force wipe. Blueprints are intended to stay for long-term progression.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Discord & Store</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Discord</h3>
+      <p>Coming soon. Announcements, reports, support, and community chat.</p>
+    </div>
+    <div class="card">
+      <h3>Supporter Store</h3>
+      <p>Coming soon. Cosmetics and supporter perks only. No pay-to-win.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  SouthernRust © 2026 | Built Southern. Play Strong.
+</footer>
+
+</body>
+</html>
