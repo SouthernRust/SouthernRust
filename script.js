@@ -23,7 +23,7 @@
 */
 
 const DISCORD_INVITE =
-  "https://discord.gg/YOUR-DISCORD-INVITE";
+  "https://discord.gg/55vTyJVRf";
 
 const NEXT_WIPE_DATE =
   "2026-08-06T19:00:00+12:00";
