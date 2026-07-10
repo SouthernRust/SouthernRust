@@ -1,454 +1,944 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SouthernRust | NZ & AU Rust Server</title>
+  <meta charset="UTF-8">
 
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-    body {
-      font-family: Arial, sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(255, 85, 0, 0.28), transparent 35%),
-        radial-gradient(circle at top left, rgba(255, 120, 20, 0.12), transparent 30%),
-        linear-gradient(180deg, #050505, #0b0705 45%, #050505);
-      color: #fff;
-    }
+  <meta
+    name="description"
+    content="SouthernRust Console Edition — a competitive Rust Console server for Australia and New Zealand."
+  >
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-      opacity: 0.35;
-    }
+  <title>SouthernRust | Rust Console Edition</title>
 
-    nav {
-      height: 82px;
-      background: rgba(0,0,0,0.85);
-      border-bottom: 1px solid rgba(255,85,0,0.35);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 42px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      backdrop-filter: blur(8px);
-    }
-
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 24px;
-      font-weight: 900;
-      text-transform: uppercase;
-    }
-
-    .nav-logo img { width: 62px; height: 62px; object-fit: contain; }
-    .nav-logo span:last-child { color: #f05a18; }
-
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin: 0 14px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      font-size: 14px;
-    }
-
-    nav a:hover { color: #f05a18; }
-
-    .discord-btn {
-      border: 1px solid #f05a18;
-      padding: 14px 22px;
-      border-radius: 4px;
-      color: #fff;
-    }
-
-    .hero {
-      min-height: 650px;
-      display: grid;
-      grid-template-columns: 1.05fr 1fr;
-      gap: 50px;
-      align-items: center;
-      padding: 70px 8%;
-      background:
-        linear-gradient(90deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.78) 42%, rgba(120,45,10,0.28) 100%);
-      border-bottom: 1px solid rgba(255,85,0,0.25);
-    }
-
-    .hero-logo {
-      width: 520px;
-      max-width: 100%;
-      filter: drop-shadow(0 0 30px rgba(255,80,0,0.25));
-    }
-
-    .tag {
-      border: 1px solid rgba(255,255,255,0.45);
-      padding: 14px 22px;
-      max-width: 520px;
-      margin: 18px 0 26px;
-      text-align: center;
-      letter-spacing: 4px;
-      font-size: 17px;
-      text-transform: uppercase;
-      background: rgba(0,0,0,0.35);
-    }
-
-    .hero-actions a {
-      display: inline-block;
-      padding: 18px 34px;
-      margin-right: 12px;
-      border-radius: 4px;
-      text-decoration: none;
-      text-transform: uppercase;
-      font-weight: 900;
-      letter-spacing: 1px;
-    }
-
-    .join {
-      background: linear-gradient(180deg, #ff6a1a, #d93d00);
-      color: #fff;
-      box-shadow: 0 0 18px rgba(255,85,0,0.35);
-    }
-
-    .rules {
-      border: 1px solid #f05a18;
-      color: #fff;
-      background: rgba(0,0,0,0.3);
-    }
-
-    .visual {
-      min-height: 430px;
-      border: 1px solid rgba(255,85,0,0.35);
-      border-radius: 10px;
-      background:
-        radial-gradient(circle at 50% 45%, rgba(255,100,20,0.45), transparent 30%),
-        linear-gradient(135deg, #120805, #1c0c05 50%, #050505);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .visual::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        -15deg,
-        rgba(255,255,255,0.035) 0,
-        rgba(255,255,255,0.035) 1px,
-        transparent 1px,
-        transparent 18px
-      );
-      opacity: 0.4;
-    }
-
-    .visual h2 {
-      position: relative;
-      font-size: 54px;
-      text-align: center;
-      color: #f05a18;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-    }
-
-    .status {
-      margin: -45px 7% 60px;
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      border: 1px solid rgba(255,85,0,0.7);
-      background: rgba(7,7,7,0.9);
-      box-shadow: 0 0 35px rgba(0,0,0,0.7);
-    }
-
-    .status-card {
-      padding: 28px;
-      border-right: 1px solid rgba(255,85,0,0.35);
-      display: flex;
-      gap: 18px;
-      align-items: center;
-    }
-
-    .status-card:last-child { border-right: none; }
-
-    .icon {
-      font-size: 42px;
-      color: #f05a18;
-    }
-
-    .status-card h3 {
-      font-size: 15px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #ddd;
-      margin-bottom: 8px;
-    }
-
-    .status-card strong {
-      color: #f05a18;
-      font-size: 28px;
-      text-transform: uppercase;
-    }
-
-    section {
-      padding: 30px 7% 70px;
-    }
-
-    .section-title {
-      text-align: center;
-      text-transform: uppercase;
-      font-size: 36px;
-      margin-bottom: 36px;
-      letter-spacing: 2px;
-    }
-
-    .section-title span { color: #f05a18; }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 18px;
-    }
-
-    .feature {
-      background: rgba(8,8,8,0.88);
-      border: 1px solid rgba(255,85,0,0.45);
-      padding: 28px 22px;
-      min-height: 190px;
-      text-align: center;
-      transition: 0.25s;
-    }
-
-    .feature:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 22px rgba(255,85,0,0.25);
-    }
-
-    .feature .icon { margin-bottom: 16px; }
-
-    .feature h3 {
-      text-transform: uppercase;
-      margin-bottom: 12px;
-      letter-spacing: 1px;
-    }
-
-    .feature p {
-      color: #cfcfcf;
-      line-height: 1.5;
-      font-size: 15px;
-    }
-
-    .connect-box, .rules-box {
-      max-width: 1100px;
-      margin: 0 auto;
-      background: rgba(8,8,8,0.9);
-      border: 1px solid rgba(255,85,0,0.45);
-      padding: 35px;
-      line-height: 1.8;
-    }
-
-    .connect-code {
-      margin-top: 18px;
-      padding: 18px;
-      background: #0f0f0f;
-      border-left: 4px solid #f05a18;
-      color: #f05a18;
-      font-size: 22px;
-      word-break: break-all;
-    }
-
-    footer {
-      border-top: 1px solid rgba(255,85,0,0.35);
-      padding: 28px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(0,0,0,0.9);
-      color: #aaa;
-    }
-
-    footer span { color: #f05a18; font-weight: 900; }
-
-    @media (max-width: 950px) {
-      nav { padding: 0 18px; }
-      .links { display: none; }
-      .hero { grid-template-columns: 1fr; text-align: center; padding: 45px 6%; }
-      .tag { margin-left: auto; margin-right: auto; }
-      .status { grid-template-columns: 1fr; margin: 0 5% 45px; }
-      .status-card { border-right: none; border-bottom: 1px solid rgba(255,85,0,0.35); }
-      .features { grid-template-columns: 1fr; }
-      footer { flex-direction: column; gap: 12px; text-align: center; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<nav>
-  <div class="nav-logo">
-    <img src="logo.png" alt="SouthernRust">
-    <div><span>Southern</span><span>Rust</span></div>
-  </div>
+  <!-- Background effects -->
+  <div class="background-grid"></div>
+  <div class="background-glow glow-one"></div>
+  <div class="background-glow glow-two"></div>
 
-  <div class="links">
-    <a href="#">Home</a>
-    <a href="#rules">Rules</a>
-    <a href="#connect">Connect</a>
-    <a href="#wipe">Wipe Info</a>
-    <a href="#store">Store</a>
-    <a href="#discord">Discord</a>
-  </div>
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
 
-  <a class="discord-btn" href="#discord">Join Discord</a>
-</nav>
+    <a href="#home" class="nav-brand">
+      <img src="logo.png" alt="SouthernRust logo">
 
-<header class="hero">
-  <div>
-    <img class="hero-logo" src="logo.png" alt="SouthernRust Logo">
+      <div class="brand-text">
+        <span class="brand-name">
+          Southern<span>Rust</span>
+        </span>
 
-    <div class="tag">NZ & AU Solo/Trio Vanilla Rust Server</div>
+        <span class="brand-subtitle">
+          Console Edition
+        </span>
+      </div>
+    </a>
 
-    <div class="hero-actions">
-      <a class="join" href="#connect">Join Server</a>
-      <a class="rules" href="#rules">View Rules</a>
-    </div>
-  </div>
+    <button
+      class="mobile-menu-button"
+      id="mobileMenuButton"
+      type="button"
+      aria-label="Open navigation menu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
 
-  <div class="visual">
-    <h2>Built Southern.<br>Play Strong.</h2>
-  </div>
-</header>
+    <div class="nav-links" id="navLinks">
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="#join">How to Join</a>
+      <a href="#rules">Rules</a>
+      <a href="#wipe">Wipe</a>
+      <a href="#store">Store</a>
 
-<div class="status">
-  <div class="status-card">
-    <div class="icon">👥</div>
-    <div>
-      <h3>Players Online</h3>
-      <strong>0 / 75</strong>
-    </div>
-  </div>
-
-  <div class="status-card">
-    <div class="icon">📅</div>
-    <div>
-      <h3>Monthly Wipe</h3>
-      <strong>Force Wipe</strong>
-    </div>
-  </div>
-
-  <div class="status-card">
-    <div class="icon">🛡️</div>
-    <div>
-      <h3>Offline Raid Protection</h3>
-      <strong>30 Minutes</strong>
-    </div>
-  </div>
-
-  <div class="status-card">
-    <div class="icon">🗺️</div>
-    <div>
-      <h3>Region</h3>
-      <strong>NZ & AU</strong>
-    </div>
-  </div>
-</div>
-
-<section>
-  <h2 class="section-title">Why Play Southern<span>Rust?</span></h2>
-
-  <div class="features">
-    <div class="feature">
-      <div class="icon">👥</div>
-      <h3>Solo / Trio</h3>
-      <p>Maximum team size of 3. No giant clans. Fair fights only.</p>
+      <a
+        href="#"
+        class="nav-discord discord-link"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Join Discord
+      </a>
     </div>
 
-    <div class="feature">
-      <div class="icon">🛡️</div>
-      <h3>No Offline Raiding</h3>
-      <p>Offline raid protection activates after 30 minutes offline.</p>
+  </nav>
+
+  <main>
+
+    <!-- Hero -->
+    <header class="hero" id="home">
+
+      <div class="hero-overlay"></div>
+      <div class="hero-noise"></div>
+
+      <div class="hero-content">
+
+        <div class="hero-badge">
+          <span class="live-dot"></span>
+          Australia & New Zealand
+        </div>
+
+        <img
+          src="logo.png"
+          alt="SouthernRust"
+          class="hero-logo"
+        >
+
+        <p class="hero-eyebrow">
+          Rust Console Edition
+        </p>
+
+        <h1>
+          Survive.
+          <span>Raid.</span>
+          Dominate.
+        </h1>
+
+        <p class="hero-description">
+          A competitive Solo/Trio Rust Console community created for
+          PlayStation and Xbox players across Australia and New Zealand.
+        </p>
+
+        <div class="hero-platforms">
+          <span>PlayStation</span>
+          <span>Xbox</span>
+          <span>Solo / Trio</span>
+          <span>Vanilla+</span>
+        </div>
+
+        <div class="hero-buttons">
+
+          <a href="#join" class="button button-primary">
+            Find the Server
+          </a>
+
+          <a
+            href="#"
+            class="button button-discord discord-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Join Discord
+          </a>
+
+        </div>
+
+      </div>
+
+      <a href="#server-status" class="scroll-indicator">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </a>
+
+    </header>
+
+    <!-- Server status -->
+    <section class="status-section" id="server-status">
+
+      <div class="status-grid">
+
+        <article class="status-card">
+          <div class="status-icon">●</div>
+
+          <div>
+            <p class="status-label">Server Status</p>
+            <h2 class="online-text">Online</h2>
+          </div>
+        </article>
+
+        <article class="status-card">
+          <div class="status-icon">03</div>
+
+          <div>
+            <p class="status-label">Team Limit</p>
+            <h2>Solo / Trio</h2>
+          </div>
+        </article>
+
+        <article class="status-card">
+          <div class="status-icon">24</div>
+
+          <div>
+            <p class="status-label">Raid Protection</p>
+            <h2>Online Raids</h2>
+          </div>
+        </article>
+
+        <article class="status-card">
+          <div class="status-icon">AU</div>
+
+          <div>
+            <p class="status-label">Region</p>
+            <h2>NZ & AU</h2>
+          </div>
+        </article>
+
+      </div>
+
+    </section>
+
+    <!-- Introduction -->
+    <section class="section intro-section">
+
+      <div class="section-container intro-grid">
+
+        <div class="intro-content">
+
+          <p class="section-kicker">
+            Welcome to SouthernRust
+          </p>
+
+          <h2 class="section-heading">
+            Built for the
+            <span>Southern Community.</span>
+          </h2>
+
+          <p class="section-description">
+            SouthernRust is a Rust Console Edition server built specifically
+            for players in New Zealand and Australia. We focus on fair
+            competition, active administration and a strong community.
+          </p>
+
+          <p class="section-description">
+            No massive clans. No unchecked offline destruction. Just strong
+            bases, competitive fights and proper console Rust.
+          </p>
+
+          <a
+            href="#"
+            class="text-link discord-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Enter the SouthernRust Discord
+            <span>→</span>
+          </a>
+
+        </div>
+
+        <div class="intro-visual">
+
+          <div class="visual-border"></div>
+
+          <div class="visual-content">
+            <p>Console Exclusive</p>
+            <h3>Built Southern.<br>Play Strong.</h3>
+
+            <div class="visual-platforms">
+              <span>PS</span>
+              <span>XBOX</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Features -->
+    <section class="section features-section" id="features">
+
+      <div class="section-container">
+
+        <div class="section-header">
+
+          <p class="section-kicker">
+            Server Features
+          </p>
+
+          <h2 class="section-heading">
+            Why play
+            <span>SouthernRust?</span>
+          </h2>
+
+          <p class="section-description centered-description">
+            A console server designed around fair competition, active support
+            and an enjoyable long-term wipe.
+          </p>
+
+        </div>
+
+        <div class="features-grid">
+
+          <article class="feature-card">
+            <div class="feature-number">01</div>
+
+            <div class="feature-icon">◈</div>
+
+            <h3>Console Exclusive</h3>
+
+            <p>
+              Created for Rust Console Edition players on PlayStation and Xbox.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-number">02</div>
+
+            <div class="feature-icon">⚔</div>
+
+            <h3>Solo / Trio</h3>
+
+            <p>
+              Maximum team size of three players for balanced fights and
+              manageable competition.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-number">03</div>
+
+            <div class="feature-icon">⬡</div>
+
+            <h3>Raid Protection</h3>
+
+            <p>
+              Our raid rules are designed to reduce unfair offline destruction
+              and encourage proper online battles.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-number">04</div>
+
+            <div class="feature-icon">✦</div>
+
+            <h3>Vanilla+</h3>
+
+            <p>
+              Familiar Rust progression with carefully selected quality-of-life
+              improvements.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-number">05</div>
+
+            <div class="feature-icon">◆</div>
+
+            <h3>Active Administration</h3>
+
+            <p>
+              Reports, support requests and rule violations are handled through
+              our Discord community.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-number">06</div>
+
+            <div class="feature-icon">⌖</div>
+
+            <h3>Oceania Region</h3>
+
+            <p>
+              A dedicated community for players across New Zealand and
+              Australia.
+            </p>
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- How to join -->
+    <section class="section join-section" id="join">
+
+      <div class="section-container">
+
+        <div class="section-header">
+
+          <p class="section-kicker">
+            Enter the Server
+          </p>
+
+          <h2 class="section-heading">
+            How to join on
+            <span>Console.</span>
+          </h2>
+
+        </div>
+
+        <div class="join-layout">
+
+          <div class="join-steps">
+
+            <article class="join-step">
+              <div class="step-number">01</div>
+
+              <div>
+                <h3>Launch Rust Console Edition</h3>
+
+                <p>
+                  Open Rust Console Edition on your PlayStation or Xbox.
+                </p>
+              </div>
+            </article>
+
+            <article class="join-step">
+              <div class="step-number">02</div>
+
+              <div>
+                <h3>Select Play Rust</h3>
+
+                <p>
+                  Open the server browser from the main game menu.
+                </p>
+              </div>
+            </article>
+
+            <article class="join-step">
+              <div class="step-number">03</div>
+
+              <div>
+                <h3>Open Community Servers</h3>
+
+                <p>
+                  Make sure you are searching inside the Community server list.
+                </p>
+              </div>
+            </article>
+
+            <article class="join-step">
+              <div class="step-number">04</div>
+
+              <div>
+                <h3>Search SouthernRust</h3>
+
+                <p>
+                  Search the exact server name shown in the panel.
+                </p>
+              </div>
+            </article>
+
+          </div>
+
+          <aside class="server-search-card">
+
+            <div class="server-search-top">
+              <span class="server-live-dot"></span>
+              Server Online
+            </div>
+
+            <p class="search-label">
+              Search this server name
+            </p>
+
+            <div class="server-name-box">
+              <strong id="serverName">
+                SouthernRust
+              </strong>
+
+              <button
+                type="button"
+                class="copy-button"
+                id="copyServerButton"
+              >
+                Copy
+              </button>
+            </div>
+
+            <div class="server-details">
+
+              <div>
+                <span>Platform</span>
+                <strong>Console</strong>
+              </div>
+
+              <div>
+                <span>Region</span>
+                <strong>NZ / AU</strong>
+              </div>
+
+              <div>
+                <span>Team</span>
+                <strong>Solo / Trio</strong>
+              </div>
+
+              <div>
+                <span>Type</span>
+                <strong>Vanilla+</strong>
+              </div>
+
+            </div>
+
+            <a
+              href="#"
+              class="button button-discord full-width discord-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Get Help on Discord
+            </a>
+
+          </aside>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Wipe countdown -->
+    <section class="wipe-section" id="wipe">
+
+      <div class="wipe-overlay"></div>
+
+      <div class="section-container wipe-content">
+
+        <p class="section-kicker">
+          Wipe Schedule
+        </p>
+
+        <h2 class="section-heading">
+          Next server
+          <span>wipe.</span>
+        </h2>
+
+        <p class="wipe-description">
+          Official wipe information and any schedule changes will be announced
+          through the SouthernRust Discord.
+        </p>
+
+        <div class="countdown" id="countdown">
+
+          <div class="countdown-item">
+            <strong id="countdownDays">00</strong>
+            <span>Days</span>
+          </div>
+
+          <div class="countdown-divider">:</div>
+
+          <div class="countdown-item">
+            <strong id="countdownHours">00</strong>
+            <span>Hours</span>
+          </div>
+
+          <div class="countdown-divider">:</div>
+
+          <div class="countdown-item">
+            <strong id="countdownMinutes">00</strong>
+            <span>Minutes</span>
+          </div>
+
+          <div class="countdown-divider">:</div>
+
+          <div class="countdown-item">
+            <strong id="countdownSeconds">00</strong>
+            <span>Seconds</span>
+          </div>
+
+        </div>
+
+        <p class="wipe-date" id="wipeDateText">
+          Next wipe date will be announced soon.
+        </p>
+
+      </div>
+
+    </section>
+
+    <!-- Rules -->
+    <section class="section rules-section" id="rules">
+
+      <div class="section-container">
+
+        <div class="section-header">
+
+          <p class="section-kicker">
+            Community Standards
+          </p>
+
+          <h2 class="section-heading">
+            Server
+            <span>rules.</span>
+          </h2>
+
+          <p class="section-description centered-description">
+            Keep the server competitive, respectful and fair for everyone.
+          </p>
+
+        </div>
+
+        <div class="rules-grid">
+
+          <article class="rule-card">
+            <span>01</span>
+
+            <div>
+              <h3>Maximum Trio</h3>
+              <p>
+                Teams may contain a maximum of three active players.
+              </p>
+            </div>
+          </article>
+
+          <article class="rule-card">
+            <span>02</span>
+
+            <div>
+              <h3>No Cheating</h3>
+              <p>
+                Cheating, scripting, exploiting and ban evasion are forbidden.
+              </p>
+            </div>
+          </article>
+
+          <article class="rule-card">
+            <span>03</span>
+
+            <div>
+              <h3>No Teaming</h3>
+              <p>
+                Do not cooperate with other teams beyond the trio limit.
+              </p>
+            </div>
+          </article>
+
+          <article class="rule-card">
+            <span>04</span>
+
+            <div>
+              <h3>Raid Rules</h3>
+              <p>
+                Follow all current online-raiding and raid-protection rules.
+              </p>
+            </div>
+          </article>
+
+          <article class="rule-card">
+            <span>05</span>
+
+            <div>
+              <h3>No Abuse</h3>
+              <p>
+                Harassment, hate speech and serious abuse will not be tolerated.
+              </p>
+            </div>
+          </article>
+
+          <article class="rule-card">
+            <span>06</span>
+
+            <div>
+              <h3>Follow Staff Instructions</h3>
+              <p>
+                Administration decisions and support matters are handled through
+                Discord.
+              </p>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="rules-discord-box">
+
+          <div>
+            <p class="section-kicker">
+              Full Rules
+            </p>
+
+            <h3>
+              Read the latest rules before joining.
+            </h3>
+          </div>
+
+          <a
+            href="#"
+            class="button button-primary discord-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open Discord
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Store -->
+    <section class="section store-section" id="store">
+
+      <div class="section-container">
+
+        <div class="section-header">
+
+          <p class="section-kicker">
+            SouthernRust Store
+          </p>
+
+          <h2 class="section-heading">
+            Support the
+            <span>server.</span>
+          </h2>
+
+          <p class="section-description centered-description">
+            Purchase server coins and available packages through our Discord
+            store powered by Helios.
+          </p>
+
+        </div>
+
+        <div class="store-grid">
+
+          <article class="store-card">
+
+            <div class="store-card-top">
+              <span class="store-label">Popular</span>
+              <h3>Server Coins</h3>
+              <p>
+                Purchase coins and spend them on available SouthernRust store
+                items.
+              </p>
+            </div>
+
+            <div class="store-price">
+              <span>Available through</span>
+              <strong>Discord</strong>
+            </div>
+
+            <ul>
+              <li>Managed through Helios</li>
+              <li>Discord-linked purchases</li>
+              <li>Access available store packages</li>
+              <li>Support server development</li>
+            </ul>
+
+            <a
+              href="#"
+              class="button button-primary full-width discord-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open Store
+            </a>
+
+          </article>
+
+          <article class="store-card featured-store-card">
+
+            <div class="recommended-banner">
+              SouthernRust Supporter
+            </div>
+
+            <div class="store-card-top">
+              <span class="store-label">Community</span>
+              <h3>Supporter Packages</h3>
+              <p>
+                Help cover hosting, administration tools and future server
+                development.
+              </p>
+            </div>
+
+            <div class="store-price">
+              <span>View packages in</span>
+              <strong>Discord</strong>
+            </div>
+
+            <ul>
+              <li>Support SouthernRust</li>
+              <li>Community supporter role</li>
+              <li>Access package information</li>
+              <li>Helios purchase system</li>
+            </ul>
+
+            <a
+              href="#"
+              class="button button-discord full-width discord-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Packages
+            </a>
+
+          </article>
+
+          <article class="store-card">
+
+            <div class="store-card-top">
+              <span class="store-label">Help</span>
+              <h3>Purchase Support</h3>
+              <p>
+                Need assistance buying coins or accessing a purchased package?
+              </p>
+            </div>
+
+            <div class="store-price">
+              <span>Create a ticket on</span>
+              <strong>Discord</strong>
+            </div>
+
+            <ul>
+              <li>Purchase assistance</li>
+              <li>Missing package support</li>
+              <li>Discord account linking</li>
+              <li>Staff ticket system</li>
+            </ul>
+
+            <a
+              href="#"
+              class="button button-outline full-width discord-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Contact Support
+            </a>
+
+          </article>
+
+        </div>
+
+        <p class="store-disclaimer">
+          Store packages and benefits may change. Review all current package
+          information in Discord before purchasing.
+        </p>
+
+      </div>
+
+    </section>
+
+    <!-- Discord call to action -->
+    <section class="discord-section">
+
+      <div class="discord-background"></div>
+
+      <div class="section-container discord-content">
+
+        <div class="discord-logo">
+          <span>SR</span>
+        </div>
+
+        <p class="section-kicker">
+          Join the Community
+        </p>
+
+        <h2>
+          The server starts in
+          <span>Discord.</span>
+        </h2>
+
+        <p>
+          Get wipe announcements, server updates, store access, support,
+          player reports and community news.
+        </p>
+
+        <div class="discord-benefits">
+          <span>Announcements</span>
+          <span>Store Access</span>
+          <span>Support Tickets</span>
+          <span>Player Reports</span>
+        </div>
+
+        <a
+          href="#"
+          class="button button-discord large-button discord-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Join SouthernRust Discord
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+
+    <div class="footer-main">
+
+      <div class="footer-brand">
+
+        <img src="logo.png" alt="SouthernRust">
+
+        <div>
+          <h3>
+            Southern<span>Rust</span>
+          </h3>
+
+          <p>
+            Rust Console Edition
+          </p>
+        </div>
+
+      </div>
+
+      <div class="footer-links">
+
+        <div>
+          <h4>Server</h4>
+          <a href="#features">Features</a>
+          <a href="#join">How to Join</a>
+          <a href="#wipe">Wipe Info</a>
+          <a href="#rules">Rules</a>
+        </div>
+
+        <div>
+          <h4>Community</h4>
+
+          <a
+            href="#"
+            class="discord-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Discord
+          </a>
+
+          <a href="#store">Store</a>
+          <a href="#rules">Support</a>
+        </div>
+
+        <div>
+          <h4>Platforms</h4>
+          <span>PlayStation</span>
+          <span>Xbox</span>
+          <span>Australia</span>
+          <span>New Zealand</span>
+        </div>
+
+      </div>
+
     </div>
 
-    <div class="feature">
-      <div class="icon">📦</div>
-      <h3>Vanilla Experience</h3>
-      <p>No kits, no teleport, no boosted loot, no pay-to-win.</p>
+    <div class="footer-bottom">
+
+      <p>
+        © <span id="currentYear"></span> SouthernRust. All rights reserved.
+      </p>
+
+      <p>
+        SouthernRust is an independent community and is not affiliated with
+        Facepunch Studios or Double Eleven.
+      </p>
+
     </div>
 
-    <div class="feature">
-      <div class="icon">🔁</div>
-      <h3>Monthly Wipes</h3>
-      <p>Map wipes monthly. Blueprints stay for long-term progression.</p>
-    </div>
+  </footer>
 
-    <div class="feature">
-      <div class="icon">🔥</div>
-      <h3>Real Community</h3>
-      <p>Built for NZ and AU players who want fair Rust.</p>
-    </div>
+  <!-- Notification -->
+  <div class="notification" id="notification">
+    Server name copied.
   </div>
-</section>
 
-<section id="connect">
-  <h2 class="section-title">Connect</h2>
-  <div class="connect-box">
-    Open Rust, press <strong>F1</strong>, then paste:
-    <div class="connect-code">client.connect 103.15.237.67:26912</div>
-  </div>
-</section>
-
-<section id="rules">
-  <h2 class="section-title">Rules</h2>
-  <div class="rules-box">
-    <p>1. Maximum team size is 3 players.</p>
-    <p>2. No cheating, scripting, exploiting, or ban evasion.</p>
-    <p>3. No teaming beyond trio limit.</p>
-    <p>4. Online raiding is allowed.</p>
-    <p>5. Offline raid protection activates after 30 minutes offline.</p>
-    <p>6. No teleport. No kits. No pay-to-win.</p>
-    <p>7. Respect players and staff.</p>
-  </div>
-</section>
-
-<section id="wipe">
-  <h2 class="section-title">Wipe Info</h2>
-  <div class="connect-box">
-    SouthernRust follows the monthly Rust force wipe. Map wipes monthly. Blueprints stay unless announced.
-  </div>
-</section>
-
-<section id="store">
-  <h2 class="section-title">Store</h2>
-  <div class="connect-box">
-    Coming soon. Supporter perks will be cosmetic and fair only. No pay-to-win.
-  </div>
-</section>
-
-<section id="discord">
-  <h2 class="section-title">Discord</h2>
-  <div class="connect-box">
-    Discord coming soon. This will be used for announcements, reports, support, suggestions, and wipe info.
-  </div>
-</section>
-
-<footer>
-  <div>© 2026 SouthernRust</div>
-  <div><span>Built Southern. Play Strong.</span></div>
-</footer>
+  <script src="script.js"></script>
 
 </body>
 </html>
